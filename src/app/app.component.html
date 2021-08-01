@@ -1,0 +1,15 @@
+<video id="my-video" autoplay style="display: none;" src="https://web.vcc-vinaphone.com.vn/images/320x240.ogg">
+</video>
+<video id="peer-video" autoplay style="display: none;" src="https://web.vcc-vinaphone.com.vn/images/320x240.ogg">
+</video>
+
+<button id="enable" (click)="csEnableCall()">1. Kích hoạt tab nhận cuộc gọi </button><br/>
+<button id="enable" (click)="changeCallStatus()">2. On/Off trạng thái</button><br/>
+<input type="text" id="phoneNumber" [(ngModel)]="phoneNumber"/><button (click)="onCallout()">3. Gọi ra khách hàng</button><br/>
+<button (click)="endCall();">4.Kết thúc gọi ra</button><br/><br/><br/><br/>
+
+<label id="phoneNo"></label><br/>
+<button (click)="onAcceptCall();">I. Nhận cuộc gọi vào</button><br/>
+<button (click)="muteCall();">II.Mute/Unmute</button><br/>
+<button (click)="holdCall();">III.Hold/Unhold</button><br/>
+<button (click)="endCall();">IV.Kết thúc cuộc gọi vào</button><br/>
