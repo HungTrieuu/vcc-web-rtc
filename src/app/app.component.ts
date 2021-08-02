@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Util } from 'src/Util';
+import {HttpClient} from '@angular/common/http';
 
 declare const $: any;
 
@@ -17,84 +18,178 @@ export class AppComponent implements OnInit {
   domain: string = '0888815096';
   phoneNumber: string = '0376491393';
 
+  body = {token : this.token}
+
+  constructor(private http: HttpClient) {}
+
   ngOnInit(): void {
-    Util.StringeeObject.init(this.token, this.domain);
+    if(this.token){
+      this.http.post<any>(`https://web.vcc-vinaphone.com.vn/${this.domain}/thirdParty/login`, this.body)
+      .subscribe(res => {
+        if(res){
+          Util.StringeeObject.init(this.token, this.domain);
 
-    Util.StringeeObject.listener({
-      endCall: () => {
-        console.log("Call is ended");
-        const el = document.getElementById("phoneNo");
-        if (el) {
-          el.innerHTML = "";
-        }
+          Util.StringeeObject.listener({
+            endCall: () => {
+              console.log("Call is ended");
+              const el = document.getElementById("phoneNo");
+              if (el) {
+                el.innerHTML = "";
+              }
 
-      },
-      callRingingAgent: () => {
-        console.log("Has a new call to agent");
-      },
-      callRinging: (param: any) => {
-        console.log("Has a new call to customer: " + param?.phone);
-        const el = document.getElementById("phoneNo");
-        if (el) {
-          el.innerHTML = param?.phone + " đang gọi ...";
-        }
-      },
-      acceptCall: () => {
-        console.log("Call is Accepted");
-        const el = document.getElementById("phoneNo");
-        if (el) {
-          el.innerHTML = "Đang trả lời";
-        }
-      },
-      customerAccept: () => {
-        console.log("csCustomerAccept");
-        const el = document.getElementById("phoneNo");
-        if (el) {
-          el.innerHTML = "Đang trả lời";
-        }
+            },
+            callRingingAgent: () => {
+              console.log("Has a new call to agent");
+            },
+            callRinging: (param: any) => {
+              console.log("Has a new call to customer: " + param?.phone);
+              const el = document.getElementById("phoneNo");
+              if (el) {
+                el.innerHTML = param?.phone + " đang gọi ...";
+              }
+            },
+            acceptCall: () => {
+              console.log("Call is Accepted");
+              const el = document.getElementById("phoneNo");
+              if (el) {
+                el.innerHTML = "Đang trả lời";
+              }
+            },
+            customerAccept: () => {
+              console.log("csCustomerAccept");
+              const el = document.getElementById("phoneNo");
+              if (el) {
+                el.innerHTML = "Đang trả lời";
+              }
 
-      },
-      muteCall: () => {
-        console.log("Call is muted");
-      },
-      unMuteCall: () => {
-        console.log("Call is unmuted");
-      },
-      holdCall: () => {
-        console.log("Call is holded");
-      },
-      unHoldCall: () => {
-        console.log("Call is unholded");
-      },
-      showCalloutInfo: (number: string) => {
-        console.log("callout to " + number);
-      },
-      showCalloutError: (param: any) => {
-        console.log("callout error " + param?.errorCode + " - " + param?.sipCode);
-      },
-      showEnableVoice: (enableVoice: any) => {
-        if (enableVoice) {
-          $("#enable").attr("disabled", "disabled");
-        } else {
-          $("#enable").removeAttr("disabled");
+            },
+            muteCall: () => {
+              console.log("Call is muted");
+            },
+            unMuteCall: () => {
+              console.log("Call is unmuted");
+            },
+            holdCall: () => {
+              console.log("Call is holded");
+            },
+            unHoldCall: () => {
+              console.log("Call is unholded");
+            },
+            showCalloutInfo: (number: string) => {
+              console.log("callout to " + number);
+            },
+            showCalloutError: (param: any) => {
+              console.log("callout error " + param?.errorCode + " - " + param?.sipCode);
+            },
+            showEnableVoice: (enableVoice: any) => {
+              if (enableVoice) {
+                $("#enable").attr("disabled", "disabled");
+              } else {
+                $("#enable").removeAttr("disabled");
+              }
+            },
+            showDeviceType: (param: any) => {
+              console.log("csShowDeviceType");
+            },
+            showCallStatus: (param: any) => {
+              console.log(param);
+              console.log("csShowCallStatus");
+              if(param.status == "Offline"){
+                this.changeCallStatus();
+              }
+            },
+            initComplete: (param: any) => {
+              console.log("csInitComplete");
+            },
+            currentCallId: (param: any) => {
+              console.log("csCurrentCallId: " + param?.callId);
+            },
+            initError: (param: any) => {
+              console.log("error: " + param?.error);
+            }
+          });
+
         }
-      },
-      showDeviceType: (param: any) => {
-        console.log("csShowDeviceType");
-      },
-      showCallStatus: (param: any) => {
-        console.log("csShowCallStatus");
-      },
-      initComplete: (param: any) => {
-        console.log("csInitComplete");
-      },
-      currentCallId: (param: any) => {
-        console.log("csCurrentCallId: " + param?.callId);
-      },
-      initError: (param: any) => {
-        console.log("error: " + param?.error);
-      }
-    });
+      })
+    }
+    
+    // Util.StringeeObject.init(this.token, this.domain);
+
+    // Util.StringeeObject.listener({
+    //   endCall: () => {
+    //     console.log("Call is ended");
+    //     const el = document.getElementById("phoneNo");
+    //     if (el) {
+    //       el.innerHTML = "";
+    //     }
+
+    //   },
+    //   callRingingAgent: () => {
+    //     console.log("Has a new call to agent");
+    //   },
+    //   callRinging: (param: any) => {
+    //     console.log("Has a new call to customer: " + param?.phone);
+    //     const el = document.getElementById("phoneNo");
+    //     if (el) {
+    //       el.innerHTML = param?.phone + " đang gọi ...";
+    //     }
+    //   },
+    //   acceptCall: () => {
+    //     console.log("Call is Accepted");
+    //     const el = document.getElementById("phoneNo");
+    //     if (el) {
+    //       el.innerHTML = "Đang trả lời";
+    //     }
+    //   },
+    //   customerAccept: () => {
+    //     console.log("csCustomerAccept");
+    //     const el = document.getElementById("phoneNo");
+    //     if (el) {
+    //       el.innerHTML = "Đang trả lời";
+    //     }
+
+    //   },
+    //   muteCall: () => {
+    //     console.log("Call is muted");
+    //   },
+    //   unMuteCall: () => {
+    //     console.log("Call is unmuted");
+    //   },
+    //   holdCall: () => {
+    //     console.log("Call is holded");
+    //   },
+    //   unHoldCall: () => {
+    //     console.log("Call is unholded");
+    //   },
+    //   showCalloutInfo: (number: string) => {
+    //     console.log("callout to " + number);
+    //   },
+    //   showCalloutError: (param: any) => {
+    //     console.log("callout error " + param?.errorCode + " - " + param?.sipCode);
+    //   },
+    //   showEnableVoice: (enableVoice: any) => {
+    //     if (enableVoice) {
+    //       $("#enable").attr("disabled", "disabled");
+    //     } else {
+    //       $("#enable").removeAttr("disabled");
+    //     }
+    //   },
+    //   showDeviceType: (param: any) => {
+    //     console.log("csShowDeviceType");
+    //   },
+    //   showCallStatus: (param: any) => {
+    //     console.log("csShowCallStatus");
+    //   },
+    //   initComplete: (param: any) => {
+    //     console.log("csInitComplete");
+    //   },
+    //   currentCallId: (param: any) => {
+    //     console.log("csCurrentCallId: " + param?.callId);
+    //   },
+    //   initError: (param: any) => {
+    //     console.log("error: " + param?.error);
+    //   }
+    // });
 
   }
 
