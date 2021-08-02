@@ -30,12 +30,6 @@
               "src/styles.css"
             ],
             "scripts": [
-              "src/assets/scripts/jquery.min.js",
-              "src/assets/scripts/cs_const.js",
-              "src/assets/scripts/cs_voice.js",
-              "src/assets/scripts/init-3.0.7.js",
-              "src/assets/scripts/web.push.js",
-              "src/assets/scripts/jssip-3.0.7.js",
               "src/assets/scripts/custom.js"
             ]
           },
@@ -105,11 +99,6 @@
               "src/styles.css"
             ],
             "scripts": [
-              "src/assets/scripts/cs_const.js",
-              "src/assets/scripts/cs_voice.js",
-              "src/assets/scripts/init-3.0.7.js",
-              "src/assets/scripts/web.push.js",
-              "src/assets/scripts/jssip-3.0.7.js",
               "src/assets/scripts/custom.js"
             ]
           }

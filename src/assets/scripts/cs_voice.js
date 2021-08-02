@@ -67,7 +67,6 @@ function CallInfo() {
 }
 
 function checkMedia() {
-  return;
     if (csVoice.deviceType == 1) {
         navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
         if (navigator.getUserMedia) {
